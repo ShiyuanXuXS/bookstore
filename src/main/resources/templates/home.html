@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <th:block th:insert="~{layout.html :: head}"></th:block>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+        
+    </head>
+    <body>
+        <div th:insert="~{layout.html :: header}"></div>
+    
+        <div class="bg-image" >
+            <!-- Home page content goes here -->
+            <div class="text-light content-text fs-3 bg-white text-dark">
+                <h1 class="display-3">BookWander Discover Worlds Between Pages</h1>
+                <p>
+                    Welcome to BookWander, where you're invited to embark on a literary adventure that transcends time and space. As an avid reader, you'll find our online bookstore to be a treasure trove of diverse narratives and knowledge. Dive into the depths of captivating novels, traverse historical epochs, and immerse yourself in a world of imagination.
+                </p>
+                <p>
+                    At BookWander, we are committed to curating an extensive collection of books that cater to every taste and interest. Whether you seek thrilling mysteries, heartwarming romances, thought-provoking non-fiction, or epic tales of fantasy, our virtual shelves hold a universe of possibilities.
+                </p>
+                <p>
+                    Discover the magic of storytelling as you browse through our carefully selected titles. Our mission is to fuel your curiosity, inspire your imagination, and provide you with the literary companions that will accompany you on your intellectual and emotional journeys.
+                </p>
+                <p>
+                    BookWander is not just an online bookstore; it's a gateway to exploration, knowledge, and the joy of reading. Join us in this literary adventure, where every page turned is a new chapter in your own personal story.
+                </p>
+            </div>
+        </div>
+        
+        <div th:insert="~{layout.html :: footer}"></div>
+        
+    </body>
+</html>

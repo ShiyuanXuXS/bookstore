@@ -1,0 +1,14 @@
+.bg-image {
+    
+    background-image: url('/images/background.jpg'); 
+    height: 75vh; 
+    background-repeat: no-repeat;
+    background-position: center center;
+    overflow:auto;
+  }
+  .content-text{
+    font-family: 'Dancing Script', cursive;
+    padding: 1em;
+    --bs-bg-opacity: .5;
+
+  }
