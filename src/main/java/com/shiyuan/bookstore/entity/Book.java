@@ -22,15 +22,18 @@ public class Book {
     private String author;
     @Column(name = "isbn")
     private String isbn;
+    @Column(name = "number")
+    private int number;
 
     public Book() {
     }
 
-    public Book(int id, String title, String author, String isbn, byte[] image) {
+    public Book(int id, String title, String author, String isbn, int number) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.isbn = isbn;
+        this.number = number;
     }
 
     public int getId() {
@@ -49,6 +52,10 @@ public class Book {
         return isbn;
     }
 
+    public int getNumber() {
+        return number;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -63,6 +70,10 @@ public class Book {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 
 }

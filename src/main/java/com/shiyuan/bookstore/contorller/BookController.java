@@ -2,7 +2,7 @@ package com.shiyuan.bookstore.contorller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +19,7 @@ import com.shiyuan.bookstore.service.BookService;
 public class BookController {
     private BookService bookService;
 
-    @Autowired
+    // @Autowired
     public BookController(BookService bookService) {
         this.bookService = bookService;
     }

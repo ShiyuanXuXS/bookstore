@@ -7,5 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.shiyuan.bookstore.entity.Order;
 
 public interface OrderRepository extends JpaRepository<Order, Integer> {
-    public List<Order> findAllByOrderByCustomernameAsc();
+    public List<Order> findAllByOrderByUpdatedatDesc();
+
+    public List<Order> findByCustomernameOrderByUpdatedatDesc(String customerName);
 }

@@ -8,7 +8,15 @@
   }
   .content-text{
     font-family: 'Dancing Script', cursive;
-    padding: 1em;
+    padding: 0.5em;
     --bs-bg-opacity: .5;
 
   }
+
+  .content-message{
+    font-family: 'Dancing Script', cursive;
+    padding: 0.5em;
+    --bs-bg-opacity: 1;
+
+  }
+

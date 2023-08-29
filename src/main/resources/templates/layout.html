@@ -19,17 +19,45 @@
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
+        
               <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
+                <div class="navbar-nav ms-auto d-flex align-items-end">
                   <a class="nav-link" aria-current="page" href="/">Home</a>
                   <a class="nav-link" href="/books">Books</a>
-                  <a class="nav-link" href="/orders/myorders">Orders</a>
-                  <a class="nav-link" href="/orders/manage">Order Manage</a>
-                  <!-- <a class="nav-link disabled" aria-disabled="true">Disabled</a> -->
+                  <div sec:authorize="hasRole('CUSTOMER')">
+                    <a class="nav-link" href="/orders/myorders">MyOrders</a>
+                  </div>
+                  <div sec:authorize="hasRole('STAFF') or hasRole('ADMIN')">
+                    <a class="nav-link" href="/orders/manage">OrderManage</a>
+                  </div>
+                  
+                  <div sec:authorize="!isAuthenticated()">
+                    <a class="nav-link ms-auto" href="/login">Login</a>
+                  </div>
+                  <div sec:authorize="isAuthenticated()">
+                    <form action="#" th:action="@{/logout}" method="POST">
+                      <div style="margin-top: 10px;" class="form-group">
+                          <div class="col-sm-6 controls">
+                              <button type="submit" class="nav-link">Logout</button>
+                          </div>
+                      </div>
+                    </form>
+                  </div>
+                  
+
                 </div>
               </div>
+
+
             </div>
+
+            
         </nav>
+
+        <p sec:authorize="isAuthenticated()" class="container">
+          User:<span sec:authentication="principal.username"></span>
+          Role(s):<span sec:authentication="principal.authorities"></span>
+        </p>
     </header>
     
     <footer th:fragment="footer">

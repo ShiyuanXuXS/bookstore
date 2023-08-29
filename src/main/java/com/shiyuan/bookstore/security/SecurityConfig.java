@@ -26,16 +26,25 @@ public class SecurityConfig {
                         .requestMatchers("/books/update").hasAnyRole("STAFF", "ADMIN")
                         .requestMatchers("/books/save").hasAnyRole("STAFF", "ADMIN")
                         .requestMatchers("/books/delete").hasAnyRole("STAFF", "ADMIN")
-                        .requestMatchers("/","/images/**","/css/**").permitAll()
+                        .requestMatchers("/orders/myorder").hasAnyRole("CUSTOMER")
+                        .requestMatchers("/orders/add").hasAnyRole("CUSTOMER")
+                        .requestMatchers("/orders/manage").hasAnyRole("STAFF", "ADMIN")
+                        .requestMatchers("/orders/update").hasAnyRole("CUSTOMER", "STAFF", "ADMIN")
+                        .requestMatchers("/orders/save").hasAnyRole("CUSTOMER", "STAFF", "ADMIN")
+                        .requestMatchers("/orders/delete").hasAnyRole("CUSTOMER", "STAFF", "ADMIN")
+                        .requestMatchers("/", "/images/**", "/css/**").permitAll()
                         .anyRequest()
                         .authenticated())
                 .formLogin(
                         form -> form
                                 .loginPage("/showLogin")
                                 .loginProcessingUrl("/authenticateTheUser")
+                                .defaultSuccessUrl("/", true)
                                 .permitAll())
-                .logout(logout -> logout.permitAll());
+                .logout(logout -> logout.permitAll())
+                .exceptionHandling(configurer -> configurer.accessDeniedPage("/access-denied"));
         return httpSecurity.build();
+
     }
 
 }
