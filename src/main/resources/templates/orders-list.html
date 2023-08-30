@@ -11,15 +11,17 @@
         <div class="bg-image" >
             
             <div class="container">
-                <h3 class="text-light content-message fs-3 bg-white text-dark">Order Directory</h3>
-                <!-- <div sec:authorize="hasRole('STAFF') or hasRole('ADMIN')">
-                    <a th:href="@{/orders/add}" class="btn btn-primary btn-sm mb-3">Add Order</a>
-                </div> -->
+                <div th:if="${option=='myorders'}">
+                    <h3 class="text-light content-message fs-3 bg-white text-dark">My Orders</h3>
+                </div>
+                <div th:if="${option=='manage'}">
+                    <h3 class="text-light content-message fs-3 bg-white text-dark">Manage Orders</h3>
+                </div>
                 
                 <table class="table table-bordered table-striped">
                     <thead class="table-light">
                         <tr>
-                            <div sec:authorize="hasAnyRole('STAFF','ADMIN')">
+                            <div th:if="${option=='manage'}">
                                 <th>Customer</th>
                             </div>
                             <th>Title</th>
@@ -31,15 +33,23 @@
                     </thead>
                     <tbody>
                         <tr th:each="order:${orders}">
+                            <div th:if="${option=='manage'}">
+                                <td th:text="${order.customername}"></td>
+                            </div>
+                            
                             <td th:text="${order.book_title}"></td>
                             <td th:text="${order.book_author}"></td>
                             <td th:text="${order.book_isbn}"></td>
                             <td th:text="${order.number}"></td>
                             <td>
-                                <div >
-                                    <!-- <a sec:authorize="hasRole('CUSTOMER')" th:href="@{/orders/add}" class="btn btn-primary btn-sm">Order</a> -->
-                                    <a sec:authorize="hasRole('STAFF') or hasRole('ADMIN')" th:href="@{/orders/update(orderId=${order.id})}" class="btn btn-info btn-sm">Update</a>
-                                    <a sec:authorize="hasRole('STAFF') or hasRole('ADMIN')" th:href="@{/orders/delete(orderId=${order.id})}" class="btn btn-danger btn-sm" onclick="if (!(confirm('Are you sure you want to delete this order?'))) return false">Delete</a>
+                                <div th:if="${option=='myorders'}">
+                                    <a th:href="@{/orders/myorders/modify(orderId=${order.id})}" class="btn btn-info btn-sm">Modify</a>
+                                    <a th:href="@{/orders/myorders/delete(orderId=${order.id})}" class="btn btn-danger btn-sm" onclick="if (!(confirm('Are you sure you want to delete this order?'))) return false">Delete</a>
+                                    
+                                </div>
+                                <div th:if="${option=='manage'}">
+                                    <a th:href="@{/orders/manage/process(orderId=${order.id})}" class="btn btn-info btn-sm">Process</a>
+                                    <a th:href="@{/orders/manage/delete(orderId=${order.id})}" class="btn btn-danger btn-sm" onclick="if (!(confirm('Are you sure you want to delete this order?'))) return false">Delete</a>
                                 </div>
                             </td>
                             

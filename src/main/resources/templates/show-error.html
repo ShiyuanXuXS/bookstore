@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <th:block th:insert="~{layout.html :: head}"></th:block>
+        
+    </head>
+    <body>
+        <div th:insert="~{layout.html :: header}"></div>
+    
+        <div class="bg-image" >
+            <!-- Home page content goes here -->
+            <div class="text-light content-message fs-3 bg-white text-dark">
+                <h2 th:text="${error}" class="display-3"></h2>
+                <a th:href="@{/}">Back to Home page</a>
+            </div>
+        </div>
+        
+        <div th:insert="~{layout.html :: footer}"></div>
+        
+    </body>
+</html>

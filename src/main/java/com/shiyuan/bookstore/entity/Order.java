@@ -170,16 +170,24 @@ public class Order {
         return createdat;
     }
 
-    // public void setCreatedat(LocalDateTime createdat) {
-    // this.createdat = createdat;
-    // }
+    public void setCreatedat(LocalDateTime createdat) {
+        this.createdat = createdat;
+    }
 
     public LocalDateTime getUpdatedat() {
         return updatedat;
     }
 
-    // public void setUpdatedat(LocalDateTime updatedat) {
-    // this.updatedat = updatedat;
-    // }
+    public void setUpdatedat(LocalDateTime updatedat) {
+        this.updatedat = updatedat;
+    }
+
+    @Override
+    public String toString() {
+        return "Order [id=" + id + ", customername=" + customername + ", book_id=" + book_id + ", book_title="
+                + book_title + ", book_author=" + book_author + ", book_isbn=" + book_isbn + ", number=" + number
+                + ", consignee=" + consignee + ", address=" + address + ", phone=" + phone + ", status=" + status
+                + ", processedby=" + processedby + ", createdat=" + createdat + ", updatedat=" + updatedat + "]";
+    }
 
 }

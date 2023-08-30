@@ -34,7 +34,7 @@
                             <td th:text="${book.number}"></td>
                             <td>
                                 <div >
-                                    <a sec:authorize="hasRole('CUSTOMER')" th:href="@{/orders/add(bookId=${book.id})}" class="btn btn-primary btn-sm">Order</a>
+                                    <a sec:authorize="hasRole('CUSTOMER')" th:href="@{/orders/myorders/add(bookId=${book.id})}" class="btn btn-primary btn-sm">Order</a>
                                     <a sec:authorize="hasRole('STAFF') or hasRole('ADMIN')" th:href="@{/books/update(bookId=${book.id})}" class="btn btn-info btn-sm">Update</a>
                                     <a sec:authorize="hasRole('STAFF') or hasRole('ADMIN')" th:href="@{/books/delete(bookId=${book.id})}" class="btn btn-danger btn-sm" onclick="if (!(confirm('Are you sure you want to delete this book?'))) return false">Delete</a>
                                 </div>

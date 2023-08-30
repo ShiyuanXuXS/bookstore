@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <th:block th:insert="~{layout.html :: head}"></th:block>
+</head>
+<body>
+    <div th:insert="~{layout.html :: header}"></div>
+    
+        <div class="bg-image" >
+
+    <div class="container">
+        <div class="text-light content-message fs-3 bg-white text-dark">
+            <h3 class="display-9">Order Directory - Save Order</h3>
+        </div>
+        <form th:action="${((operate == 'add') || (operate == 'modify')) ? '/orders/myorders/save' : (operate == 'process' ? '/orders/manage/save' : '')}" th:object="${order}" method="POST">
+            <div th:if="${operate=='add' || operate=='modify'}">
+                <input type="hidden" th:field="*{id}">
+                <input type="hidden" th:field="*{book_id}">
+            </div>
+            <div th:if="${operate=='process'}">
+                <input type="text" th:field="*{id}" readonly>
+                <input type="text" th:field="*{book_id}" readonly>
+            </div>
+            <input type="text" th:field="*{book_title}" class="form-control mb-4 w-25" readonly>
+            <input type="text" th:field="*{book_author}" class="form-control mb-4 w-25"  readonly>
+            <input type="text" th:field="*{book_isbn}" class="form-control mb-4 w-25"  readonly>
+            <div th:if="${operate=='add' || operate=='modify'}">
+                <input type="number" th:field="*{number}" class="form-control mb-4 w-25" >
+                <input type="text" th:field="*{consignee}" class="form-control mb-4 w-25" placeholder="Consignee">
+                <input type="text" th:field="*{address}" class="form-control mb-4 w-25" placeholder="Address">
+                <input type="text" th:field="*{phone}" class="form-control mb-4 w-25" placeholder="Phone Number">
+            </div>
+            <div th:if="${operate=='process'}">
+                <input type="number" th:field="*{number}" class="form-control mb-4 w-25" readonly>
+                <input type="text" th:field="*{consignee}" class="form-control mb-4 w-25" readonly>
+                <input type="text" th:field="*{address}" class="form-control mb-4 w-25" readonly>
+                <input type="text" th:field="*{phone}" class="form-control mb-4 w-25" readonly>
+                <input type="text" th:field="*{status}" class="form-control mb-4 w-25">
+                <input type="text" th:field="*{processedby}" class="form-control mb-4 w-25" readonly>
+            </div>
+            
+            
+            <input type="hidden" name="operate" th:value="${operate}" />
+            <button type="submit" class="btn btn-info col-2">Save</button>
+        </form>
+    </div>
+</div>
+        
+        <div th:insert="~{layout.html :: footer}"></div>
+
+    
+    
+    
+</body>
+</html>
