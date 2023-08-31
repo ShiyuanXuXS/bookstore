@@ -1,7 +1,7 @@
 .bg-image {
     
     background-image: url('/images/background.jpg'); 
-    height: 75vh; 
+    height: 100vh; 
     background-repeat: no-repeat;
     background-position: center center;
     overflow:auto;
@@ -19,4 +19,7 @@
     --bs-bg-opacity: 1;
 
   }
-
+  label {
+    background-color: rgba(255, 255, 255, 0.7); 
+    
+}

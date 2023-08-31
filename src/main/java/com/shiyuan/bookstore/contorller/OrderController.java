@@ -1,5 +1,6 @@
 package com.shiyuan.bookstore.contorller;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -58,6 +59,7 @@ public class OrderController {
         order.setBook_title(book.getTitle());
         order.setBook_author(book.getAuthor());
         order.setBook_isbn(book.getIsbn());
+        order.setBook_price(book.getPrice());
         order.setNumber(1);
 
         model.addAttribute("order", order);
@@ -78,7 +80,7 @@ public class OrderController {
             return "show-error";
         }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (order.getCustomername() != authentication.getName()) {
+        if (!authentication.getName().equals(order.getCustomername())) {
             return "redirect:/access-denied";
         }
         model.addAttribute("operate", "modify");
@@ -108,30 +110,47 @@ public class OrderController {
         switch (operate) {
             case "add":
                 // customer add an order
-                if (!(authentication.getAuthorities().stream()
-                        .anyMatch(auth -> auth.getAuthority().equals("ROLE_CUSTOMER")))) {
-                    return "redirect:/access-denied";
-                }
                 Book book = bookService.findById(order.getBook_id());
                 if (book == null) {
                     model.addAttribute("error", "No such a book!");
                     return "show-error";
                 }
-                System.out.println(order);
                 order.setCustomername(authentication.getName());
                 order.setBook_title(book.getTitle());
                 order.setBook_author(book.getAuthor());
                 order.setBook_isbn(book.getIsbn());
+                BigDecimal price = book.getPrice();
+                order.setBook_price(price);
+                order.setTotal(price.multiply(BigDecimal.valueOf(order.getNumber())));
                 order.setStatus("ordered");
                 order.setCreatedat(LocalDateTime.now());
                 order.setUpdatedat(LocalDateTime.now());
-                System.out.println(order);
                 orderService.save(order);
                 return "redirect:/orders/myorders";
 
             case "modify":
                 // customer modify an order
-                break;
+                Order originalOrder = orderService.findById(order.getId());
+                if (originalOrder == null) {
+                    model.addAttribute("error", "No such an order!");
+                    return "show-error";
+                }
+                if (!(originalOrder.getCustomername().equals(authentication.getName()))) {
+                    return "redirect:/access-denied";
+                }
+                if (originalOrder.getProcessedby() != null) {
+                    model.addAttribute("error", "Cannot modify an order in process!");
+                    return "show-error";
+                }
+                int number = order.getNumber();
+                originalOrder.setNumber(number);
+                originalOrder.setTotal(originalOrder.getBook_price().multiply(BigDecimal.valueOf(number)));
+                originalOrder.setConsignee(order.getConsignee());
+                originalOrder.setAddress(order.getAddress());
+                originalOrder.setPhone(order.getPhone());
+                originalOrder.setUpdatedat(LocalDateTime.now());
+                orderService.save(originalOrder);
+                return "redirect:/orders/myorders";
 
             default:
         }
@@ -143,6 +162,9 @@ public class OrderController {
     public String saveOrder(Model model, @ModelAttribute("order") Order order,
             @ModelAttribute("operate") String operate) {
         // todo add processedby and updatedat
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        order.setProcessedby(authentication.getName());
+        order.setUpdatedat(LocalDateTime.now());
 
         orderService.save(order);
         return "redirect:/orders/manage";
@@ -150,14 +172,18 @@ public class OrderController {
     }
 
     @GetMapping("/myorders/delete")
-    public String deleteMyOrder(@RequestParam("orderId") int orderId) {
+    public String deleteMyOrder(Model model, @RequestParam("orderId") int orderId) {
         Order order = orderService.findById(orderId);
         if (order == null) {
             return "redirect:/orders/myorders";
         }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (order.getCustomername() != authentication.getName()) {
+        if (!(order.getCustomername().equals(authentication.getName()))) {
             return "redirect:/access-denied";
+        }
+        if (order.getProcessedby() != null) {
+            model.addAttribute("error", "Cannot delete an order in process!");
+            return "show-error";
         }
         orderService.deleteById(orderId);
         return "redirect:/orders/myorders";

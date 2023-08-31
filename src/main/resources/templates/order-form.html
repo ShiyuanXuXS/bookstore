@@ -13,31 +13,139 @@
             <h3 class="display-9">Order Directory - Save Order</h3>
         </div>
         <form th:action="${((operate == 'add') || (operate == 'modify')) ? '/orders/myorders/save' : (operate == 'process' ? '/orders/manage/save' : '')}" th:object="${order}" method="POST">
+ 
             <div th:if="${operate=='add' || operate=='modify'}">
                 <input type="hidden" th:field="*{id}">
                 <input type="hidden" th:field="*{book_id}">
             </div>
             <div th:if="${operate=='process'}">
-                <input type="text" th:field="*{id}" readonly>
-                <input type="text" th:field="*{book_id}" readonly>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <label for="title" class="form-label">Customer name:</label>
+                        <input id="customername" type="text" th:field="*{customername}" class="form-control w-100" readonly>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <label for="id" class="form-label">Order id:</label>
+                        <input id="id" type="text" th:field="*{id}" class="form-control w-100" readonly>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <label for="book_id" class="form-label">Book id:</label>
+                        <input id="book_id" type="text" th:field="*{book_id}" class="form-control w-100" readonly>
+                    </div>
+                </div>
             </div>
-            <input type="text" th:field="*{book_title}" class="form-control mb-4 w-25" readonly>
-            <input type="text" th:field="*{book_author}" class="form-control mb-4 w-25"  readonly>
-            <input type="text" th:field="*{book_isbn}" class="form-control mb-4 w-25"  readonly>
-            <div th:if="${operate=='add' || operate=='modify'}">
+
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <label for="book_title" class="form-label">Title:</label>
+                    <input id="book_title" type="text" th:field="*{book_title}" class="form-control w-100" readonly>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <label for="book_author" class="form-label">Author:</label>
+                    <input id="book_author" type="text" th:field="*{book_author}" class="form-control w-100"  readonly>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <label for="book_isbn" class="form-label">ISBN:</label>
+                    <input id="book_isbn" type="text" th:field="*{book_isbn}" class="form-control w-100"  readonly>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <label for="book_price" class="form-label">Price:</label>
+                    <input id="book_price" type="text" th:field="*{book_price}" step="0.01" pattern="^\d+(\.\d{1,2})?$" class="form-control w-100"  readonly>
+                </div>
+
+                <div th:if="${operate=='add' || operate=='modify'}" class="col-md-4 mb-4">
+                    <label for="number" class="form-label">Number:</label>
+                    <input id="number" type="number"  th:field="*{number}" class="form-control w-100" >
+                </div>
+                <div th:if="${operate=='process'}" class="col-md-4 mb-4">
+                    <label class="form-label">Number:</label>
+                    <input type="number"  th:field="*{number}" class="form-control w-100" readonly>
+                </div>
+
+                <!-- <div th:if="${operate=='add' || operate=='modify'}" class="col-md-4 mb-4">
+                    <label class="form-label">Total:</label>
+                    <input type="number" step="0.01" pattern="^\d+(\.\d{1,2})?$" th:field="*{total}" class="form-control w-100" readonly>
+                </div> -->
+                <div th:if="${operate=='process'}" class="col-md-4 mb-4">
+                    <label for="total" class="form-label">Total:</label>
+                    <input id="total" type="number" step="0.01" pattern="^\d+(\.\d{1,2})?$" th:field="*{total}" class="form-control w-100" >
+                </div>
+            </div>
+
+            <div th:if="${operate=='add' || operate=='modify'}" class="row">
+                <div class="col-md-4 mb-4">
+                    <label for="consignee" class="form-label">Consignee:</label>
+                    <input id="consignee" type="text" th:field="*{consignee}" class="form-control w-100" placeholder="Consignee">
+                </div>
+                <div class="col-md-4 mb-4">
+                    <label for="address" class="form-label">Address:</label>
+                    <input id="address" type="text" th:field="*{address}" class="form-control w-100" placeholder="Address">
+                </div>
+                <div class="col-md-4 mb-4">
+                    <label for="phone" class="form-label">Phone:</label>
+                    <input id="phone" type="text" th:field="*{phone}" class="form-control w-100" placeholder="Phone Number">
+                </div>
+            </div>
+            <div th:if="${operate=='process'}" class="row">
+                <div class="col-md-4 mb-4">
+                    <label class="form-label">Consignee:</label>
+                    <input type="text" th:field="*{consignee}" class="form-control w-100" placeholder="Consignee" readonly>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <label class="form-label">Address:</label>
+                    <input type="text" th:field="*{address}" class="form-control w-100" placeholder="Address" readonly>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <label class="form-label">Phone:</label>
+                    <input type="text" th:field="*{phone}" class="form-control w-100" placeholder="Phone Number" readonly>
+                </div>
+            </div>
+                
+
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <label class="form-label">Created at:</label>
+                    <input type="text" th:field="*{createdat}" class="form-control w-100" placeholder="Created at" readonly>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <label class="form-label">Updated at:</label>
+                    <input type="text" th:field="*{updatedat}" class="form-control w-100" placeholder="Updated at" readonly>
+                </div>
+            </div>
+
+            <div class="row" th:if="${operate=='process'}">
+                <div class="col-md-4 mb-4">
+                    <label for="status" class="form-label">Status:</label>
+                    <input id="status" type="text" th:field="*{status}" class="form-control w-100" placeholder="Status" >
+                </div>
+                <div class="col-md-4 mb-4">
+                    <label class="form-label">Processed by:</label>
+                    <input type="text" th:field="*{processedby}" class="form-control w-100" placeholder="Processed by" readonly>
+                </div>
+                
+            </div>
+
+
+
+            <!-- <div th:if="${operate=='add' || operate=='modify'}">
                 <input type="number" th:field="*{number}" class="form-control mb-4 w-25" >
+                <input type="text" th:field="*{total}" step="0.01" pattern="^\d+(\.\d{1,2})?$" class="form-control mb-4 w-25" readonly>
                 <input type="text" th:field="*{consignee}" class="form-control mb-4 w-25" placeholder="Consignee">
                 <input type="text" th:field="*{address}" class="form-control mb-4 w-25" placeholder="Address">
                 <input type="text" th:field="*{phone}" class="form-control mb-4 w-25" placeholder="Phone Number">
             </div>
             <div th:if="${operate=='process'}">
                 <input type="number" th:field="*{number}" class="form-control mb-4 w-25" readonly>
+                <input type="text" th:field="*{total}" step="0.01" pattern="^\d+(\.\d{1,2})?$" class="form-control mb-4 w-25">
                 <input type="text" th:field="*{consignee}" class="form-control mb-4 w-25" readonly>
                 <input type="text" th:field="*{address}" class="form-control mb-4 w-25" readonly>
                 <input type="text" th:field="*{phone}" class="form-control mb-4 w-25" readonly>
                 <input type="text" th:field="*{status}" class="form-control mb-4 w-25">
                 <input type="text" th:field="*{processedby}" class="form-control mb-4 w-25" readonly>
-            </div>
+            </div> -->
             
             
             <input type="hidden" name="operate" th:value="${operate}" />

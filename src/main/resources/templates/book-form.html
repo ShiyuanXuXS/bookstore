@@ -14,10 +14,30 @@
         </div>
         <form action="#" th:action="@{/books/save}" th:object="${book}" method="POST">
             <input type="hidden" th:field="*{id}">
-            <input type="text" th:field="*{title}" class="form-control mb-4 w-25" placeholder="Title">
-            <input type="text" th:field="*{author}" class="form-control mb-4 w-25" placeholder="Author">
-            <input type="text" th:field="*{isbn}" class="form-control mb-4 w-25" placeholder="ISBN">
-            <input type="number" th:field="*{number}" class="form-control mb-4 w-25" placeholder="Number">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <label for="title" class="form-label">Title:</label>
+                    <input id="title" type="text" th:field="*{title}" class="form-control w-100" placeholder="Title">
+                </div>
+                <div class="col-md-4 mb-4">
+                    <label for="author" class="form-label">Author:</label>
+                    <input type="text" th:field="*{author}" class="form-control w-100" placeholder="Author">
+                </div>
+                <div class="col-md-4 mb-4">
+                    <label for="isbn" class="form-label">ISBN:</label>
+                    <input type="text" th:field="*{isbn}" class="form-control w-100" placeholder="ISBN">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <label for="price" class="form-label">Price:</label>
+                    <input type="number" th:field="*{price}" class="form-control w-100" step="0.01" pattern="^\d+(\.\d{1,2})?$" placeholder="Price">
+                </div>
+                <div class="col-md-4 mb-4">
+                    <label for="number" class="form-label">Number:</label>
+                    <input type="number" th:field="*{number}" class="form-control w-100" placeholder="Number">
+                </div>
+            </div>
             
             <button type="submit" class="btn btn-info col-2">Save</button>
         </form>

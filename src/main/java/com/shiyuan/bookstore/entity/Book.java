@@ -1,5 +1,7 @@
 package com.shiyuan.bookstore.entity;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,17 +24,20 @@ public class Book {
     private String author;
     @Column(name = "isbn")
     private String isbn;
+    @Column(name = "price")
+    private BigDecimal price;
     @Column(name = "number")
     private int number;
 
     public Book() {
     }
 
-    public Book(int id, String title, String author, String isbn, int number) {
+    public Book(int id, String title, String author, String isbn, BigDecimal price, int number) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.isbn = isbn;
+        this.price = price;
         this.number = number;
     }
 
@@ -50,6 +55,10 @@ public class Book {
 
     public String getIsbn() {
         return isbn;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
     }
 
     public int getNumber() {
@@ -74,6 +83,10 @@ public class Book {
 
     public void setNumber(int number) {
         this.number = number;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
 }

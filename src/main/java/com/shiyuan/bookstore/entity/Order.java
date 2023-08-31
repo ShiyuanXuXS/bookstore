@@ -1,5 +1,6 @@
 package com.shiyuan.bookstore.entity;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -28,9 +29,13 @@ public class Order {
     private String book_author;
     @Column(name = "book_isbn")
     private String book_isbn;
+    @Column(name = "book_price")
+    private BigDecimal book_price;
 
     @Column(name = "number")
     private int number;
+    @Column(name = "total")
+    private BigDecimal total;
     @Column(name = "consignee")
     private String consignee;
     @Column(name = "address")
@@ -52,22 +57,24 @@ public class Order {
     }
 
     public Order(int id, String customername, int book_id, String book_title, String book_author, String book_isbn,
-            int number, String consignee, String address, String phone, String status, String processedby,
-            LocalDateTime createdat, LocalDateTime updatedat) {
+            BigDecimal book_price, int number, BigDecimal total, String consignee, String address, String phone,
+            String status, String processedby, LocalDateTime createdat, LocalDateTime updatedat) {
         this.id = id;
         this.customername = customername;
         this.book_id = book_id;
         this.book_title = book_title;
         this.book_author = book_author;
         this.book_isbn = book_isbn;
+        this.book_price = book_price;
         this.number = number;
+        this.total = total;
         this.consignee = consignee;
         this.address = address;
         this.phone = phone;
         this.status = status;
         this.processedby = processedby;
-        // this.createdat = createdat;
-        // this.updatedat = updatedat;
+        this.createdat = createdat;
+        this.updatedat = updatedat;
     }
 
     public int getId() {
@@ -116,6 +123,22 @@ public class Order {
 
     public void setBook_isbn(String book_isbn) {
         this.book_isbn = book_isbn;
+    }
+
+    public BigDecimal getBook_price() {
+        return book_price;
+    }
+
+    public void setBook_price(BigDecimal book_price) {
+        this.book_price = book_price;
+    }
+
+    public BigDecimal getTotal() {
+        return total;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
     }
 
     public int getNumber() {
@@ -180,14 +203,6 @@ public class Order {
 
     public void setUpdatedat(LocalDateTime updatedat) {
         this.updatedat = updatedat;
-    }
-
-    @Override
-    public String toString() {
-        return "Order [id=" + id + ", customername=" + customername + ", book_id=" + book_id + ", book_title="
-                + book_title + ", book_author=" + book_author + ", book_isbn=" + book_isbn + ", number=" + number
-                + ", consignee=" + consignee + ", address=" + address + ", phone=" + phone + ", status=" + status
-                + ", processedby=" + processedby + ", createdat=" + createdat + ", updatedat=" + updatedat + "]";
     }
 
 }
