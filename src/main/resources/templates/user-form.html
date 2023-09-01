@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <th:block th:insert="~{layout.html :: head}"></th:block>
+</head>
+<body>
+    <div th:insert="~{layout.html :: header}"></div>
+    
+        <div class="bg-image" >
+
+    <div class="container">
+        <div class="text-light content-message fs-3 bg-white text-dark">
+            <h3 th:if="${operate=='register'}" class="display-9">Register</h3>
+            <h3 th:if="${operate=='profile'}" class="display-9">My Profile</h3>
+        </div>
+        <form th:action="${((operate == 'register')) ? '/users/register/save' : (operate == 'profile' ? '/users/profile/save' : '')}" th:object="${user}" method="POST">
+ 
+            <input type="hidden" th:field="*{enabled}">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <label for="username" class="form-label">Username:</label>
+                    <input id="username" th:if="${operate=='register'}" type="text" th:field="*{username}" class="form-control w-100">
+                    <input th:if="${operate=='profile'}" type="text" th:field="*{username}" class="form-control w-100" readonly>
+                </div>
+            </div>
+            <div th:if="${operate=='profile'}" class="row">
+                <div class="form-check col-md-4 mb-4">
+                    <input class="form-check-input" type="checkbox" value="true" id="passwordChanged" name="passwordChanged">
+                    <label class="form-check-label" for="passwordChanged">
+                        Change Password
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <input type="hidden" th:field="*{password}">
+                <div th:if="${operate=='profile'}" class="col-md-4 mb-4">
+                    <label for="originalPassword" class="form-label">Orignal Password:</label>
+                    <input id="originalPassword" name="originalPassword" type="password" class="form-control w-100">
+                </div>
+                <div class="col-md-4 mb-4">
+                    <label for="newPassword" class="form-label">New Password:</label>
+                    <input id="newPassword" name="newPassword" type="password" class="form-control w-100">
+                </div>
+                <div class="col-md-4 mb-4">
+                    <label for="confirmPassword" class="form-label">Confirm Password:</label>
+                    <input id="confirmPassword" name="confirmPassword" type="password" class="form-control w-100">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <label for="realname" class="form-label">Real Name:</label>
+                    <input id="realname" th:field="*{realname}" type="text" class="form-control w-100">
+                </div>
+                <div class="col-md-4 mb-4">
+                    <label for="address" class="form-label">Address:</label>
+                    <input id="address" th:field="*{address}" type="text" class="form-control w-100">
+                </div>
+                <div class="col-md-4 mb-4">
+                    <label for="phone" class="form-label">Phone:</label>
+                    <input id="phone" th:field="*{phone}" type="text" class="form-control w-100">
+                </div>
+            </div>
+
+            <input type="hidden" name="operate" th:value="${operate}" />
+            
+            <div th:if="${response}">
+                <div th:if="${response.success}">
+                    <div class="alert alert-success col-xs-offset-1 col-xs-10" th:text="${response.message}">
+                    </div>
+                </div>
+                <div th:if="${!response.success}">
+                    <div class="alert alert-danger col-xs-offset-1 col-xs-10" th:text="${response.message}">
+                    </div>
+                </div>
+            </div>
+            <button th:if="${operate == 'register'}" type="submit" class="btn btn-info col-2">Register</button>
+            <button th:if="${operate == 'profile'}" type="submit" class="btn btn-info col-2">Update</button>
+
+        </form>
+    </div>
+</div>
+        
+        <div th:insert="~{layout.html :: footer}"></div>
+
+    
+    
+    
+</body>
+</html>
